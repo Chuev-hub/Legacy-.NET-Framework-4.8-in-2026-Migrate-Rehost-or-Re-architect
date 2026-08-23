@@ -1,0 +1,1 @@
+# Legacy-.NET-Framework-4.8-in-2026-Migrate-Rehost-or-Re-architect

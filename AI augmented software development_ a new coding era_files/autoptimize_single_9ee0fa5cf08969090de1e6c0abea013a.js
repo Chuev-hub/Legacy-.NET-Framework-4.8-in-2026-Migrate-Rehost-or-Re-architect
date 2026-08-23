@@ -1,0 +1,4 @@
+jQuery(document).ready(function($){jQuery(document).on('click','a[href*="#contact-us"]',function(e){const th=jQuery(this);const cta_button_field=jQuery('input[value="cta_button"]');const cta_title_field=jQuery('input[value="cta_title"]');const ga_session_id_field=jQuery('input[value="ga_session_id"]');const ga_user_id_field=jQuery('input[value="ga_user_id"]');const button_title=th.text().trim();const section_h1=th.closest('section').find('h1');const section_h2=th.closest('section').find('h2');const section_title=section_h1.length?section_h1.text().trim():section_h2.length?section_h2.text().trim():'';if(cta_button_field.length){cta_button_field.val(button_title);}
+if(cta_title_field.length){cta_title_field.val(section_title);}
+if(ga_session_id_field.length){const ga_ID=getCookie('_ga_VBGSXCKLZS');if(ga_ID){ga_session_id_field.val(ga_ID);}}
+if(ga_user_id_field.length){const ga_userID=getCookie('_gid');if(ga_userID){ga_user_id_field.val(ga_userID);}}})})

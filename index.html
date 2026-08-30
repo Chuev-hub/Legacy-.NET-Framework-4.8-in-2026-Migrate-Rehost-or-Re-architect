@@ -48275,30 +48275,46 @@
                   </li>
                   <li class="post-navigation__item group">
                     <span data-href="#heading2"
-                      >The benefits of AI-augmented software development</span
+                      >When Migration Is Not Necessary
+</span
                     >
                   </li>
                   <li class="post-navigation__item group">
                     <span data-href="#heading3"
-                      >The challenges of AI-augmented software engineering</span
+                      >Three Ways Forward</span
                     >
                   </li>
                   <li class="post-navigation__item group">
                     <span data-href="#heading4"
-                      >The future of AI augmented development</span
+                      >The Cost of Standing Still</span
                     >
                   </li>
                   <li class="post-navigation__item group">
                     <span data-href="#heading5"
-                      >Key tools for AI augmented development: quick
-                      overview</span
+                      >The Migration Roadmap</span
                     >
                   </li>
                   <li class="post-navigation__item group">
-                    <span data-href="#heading6">How we can help</span>
+                    <span data-href="#heading6"
+                      >Strangler Fig Pattern</span
+                    >
                   </li>
                   <li class="post-navigation__item group">
-                    <span data-href="#heading7">FAQ</span>
+                    <span data-href="#heading7"
+                      >Post-Migration Review</span
+                    >
+                  </li>
+                  <li class="post-navigation__item group">
+                    <span data-href="#heading8"
+                      >Conclusion</span
+                    >
+                  </li>
+
+                  <li class="post-navigation__item group">
+                    <span data-href="#heading9">How we can help</span>
+                  </li>
+                  <li class="post-navigation__item group">
+                    <span data-href="#heading10">FAQ</span>
                   </li>
                 </ul>
                 <div
@@ -48586,99 +48602,146 @@ Software Architecture</a
                Is <strong>.NET Framework 4.8</strong> still supported in 2026? Well... Yes. Security patches are made because the framework is bundled into Windows (not because it's actively developed). Mostly that's it.
               </p>
               <p class="wp-block-paragraph">
-All meaningful innovation — performance work, language features (C# itself is frozen at version 7.3 for Framework apps, missing over five years of language evolution), cloud-native tooling — has moved to modern .NET.
+All meaningful innovation - performance work, language features (C# itself is frozen at version 7.3 for Framework apps, missing over five years of language evolution), cloud-native tooling - has moved to modern .NET.
               </p>
               <p class="wp-block-paragraph">
 That's the <strong
                   >soft trap</strong
-                >. Nothing forces you to move. The lights stay on, the patches keep coming, and the gap between your application and everything being built around it keeps growing — quietly, one release cycle at a time.
+                >. Nothing forces you to move. The lights stay on, the patches keep coming, and the gap between your application and everything being built around it keeps growing - quietly, one release cycle at a time.
               </p>
               <h2 class="wp-block-heading" id="heading1">
                 .NET Framework vs. .NET Core: Same Name, Different Animal
               </h2>
               <p class="wp-block-paragraph">
-                Over the last decades, artificial intelligence has evolved from
-                autocompletion to co-piloting across processes. From
-                outstripping security inconsistencies to generating up-to-date
-                documents, it’s reshaping how applications are designed, built,
-                tested, and maintained.&nbsp;
+               Here's where a lot of confusion starts. ".NET" and ".NET Framework" sound like the same thing. They're not. Modern .NET isn't just a newer version of .NET Framework. It's a full rewrite: cross-platform, open-source, enhanced Security,  built for containers and cloud - not Windows-strict.
               </p>
               <h3 class="wp-block-heading">
                 <strong
-                  >Key capabilities of AI-powered software development</strong
+                  >Performance Gains</strong
                 >
               </h3>
+               <ul class="wp-block-list">
+                <li>
+Quick startup / Native AOT
+                </li>
+                <li>
+Improved memory management / GC
+                </li>
+                <li>
+Smarter CPU utilization
+                </li>
+              </ul>
+              <h3 class="wp-block-heading">
+                <strong
+                  >Improved Development</strong
+                >
+              </h3>
+              <ul class="wp-block-list">
+                <li>
+Dependency Injection
+                </li>
+                <li>
+Improved async features
+                </li>
+                <li>
+Better diagnostics
+                </li>
+                <li>
+Hot Reload
+                </li>
+                <li>
+Newer C# language features
+                </li>
+              </ul>
+              <p class="wp-block-paragraph">
+Some things just get left behind. WCF server hosting, .NET Remoting, and Web Forms have no direct equivalent on modern .NET - if your app leans on any of these, that's a rewrite, not a migration.
+              </p>
+               <h2 class="wp-block-heading" id="heading2">
+                When Migration Is Not Necessary
+              </h2>
+              <p class="wp-block-paragraph">
+                Not every legacy app needs to move. That's an unpopular thing to say in an article about migration, but it's true. If a system is small, stable, and rarely touched - no scaling pressure, no cloud requirements, nobody struggling to hire for it - "it works" is a legitimate answer.
+              </p>
+              <p class="wp-block-paragraph">
+A few concrete cases where staying put is the right call, at least for now:
+              </p>
+ <ul class="wp-block-list">
+                <li>
+              The app is near end-of-life - it's getting replaced or retired in the next year or two.
+                </li>
+                <li>
+It's isolated. No external integrations, no shared dependencies, nothing else in your stack depends on it evolving. 
+                </li>
+                <li>
+And if second is applicable, budget is better spent elsewhere. Migration isn't free - every hour spent on migration is an hour not spent on something that actually needs it.
+</li>
+              </ul>
+              <p class="wp-block-paragraph">
+So the question isn't "does it work." It's "will it still work when something around changes".
+              </p>
+              <p class="wp-block-paragraph">
+The catch is knowing which category you're actually in. Technical debt doesn't announce itself. A system that's fine today can quietly become the thing blocking a new integration, failing a security audit, or waiting on a specialist who retired two years ago.
+              </p>
+     <h2 class="wp-block-heading" id="heading3">
+                Three Ways Forward
+              </h2>
+
+              <p class="wp-block-paragraph">
+Once you've decided that system is worth touching, the next question is how much you actually want to change. There are three different options here,
+ and each one trades how long the fix actually lasts.
+              </p>
+
+<p class="wp-block-paragraph">
+<strong>Rehost.</strong> Moving without changing. Take the app as-is and shift what it runs on. Fastest option, lowest risk up front. 
+              </p>
+<p class="wp-block-paragraph">
+
+<strong>Migrate.</strong> Move it to modern .NET, keep the shape of the app roughly the same. Slower than rehosting, but you come to a platform that's actually evolving.
+              </p>
+
+<p class="wp-block-paragraph">
+<strong>Re-architect.</strong> Rethinking of application. Break up the monolith, go microservices, redesign for cloud-native from scratch. Highest cost, highest risk, longest timeline.
+              </p>
+
+<p class="wp-block-paragraph">
+None of these is "correct", let`s take a look
+              </p>
+              
+              <h4 class="wp-block-heading">Rehost</h4>
+              <h4 class="wp-block-heading">Migrate</h4>
+              <h4 class="wp-block-heading">Re-architect</h4>
+
+
+
+
+              <h2 class="wp-block-heading" id="heading4">The Cost of Standing Still
+              </h2>
+              <h2 class="wp-block-heading" id="heading5">The Migration Roadmap
+              </h2>
+              <h2 class="wp-block-heading" id="heading6"> Strangler Fig Pattern
+              </h2>
+              <h2 class="wp-block-heading" id="heading7">Post-Migration Review
+              </h2>
+              <h2 class="wp-block-heading" id="heading8">Conclusion
+              </h2>
+
+
               <h4 class="wp-block-heading">Code analysis</h4>
               <p class="wp-block-paragraph">
                 AI parses the codebase to highlight security gaps, deceptive
                 elements, and potential performance bottlenecks. The insights
                 help teams to identify serious issues before escalation.
               </p>
-              <p class="wp-block-paragraph">Here is an example:</p>
-              <pre
-                class="wp-block-preformatted"
-              >def connect_to_db(): user = "admin" <strong>password = "123456" (AI flags this line)</strong> return db.connect(user=user, password=password)</pre>
-              <p class="wp-block-paragraph">
-                <em
-                  >Original snippet: hard-coded credentials (security risk)</em
-                >
-              </p>
+            
               <pre class="wp-block-preformatted">
 import osdef connect_to_db(): user = os.getenv("DB_USER") password = os.getenv("DB_PASS") if not user or not password:&nbsp;&nbsp;&nbsp;&nbsp; raise RuntimeError("Database credentials not set") return db.connect(user=user, password=password)</pre
               >
               <p class="wp-block-paragraph">
                 <em>AI suggestion: environment variables</em>
               </p>
-              <h4 class="wp-block-heading">Code generation</h4>
-              <p class="wp-block-paragraph">
-                After receiving clear instructions (“user profile page allowing
-                image upload”), AI drafts the results in seconds. This means
-                rapid scaffolding without wasting valuable hours on routines.
-              </p>
-              <p class="wp-block-paragraph">For example:</p>
-              <pre
-                class="wp-block-preformatted"
-              ><em>// Node.js + Express: routes/upload-avatar.js</em>const express = require("express");const multer&nbsp; = require("multer");const upload = multer({ dest: "./public/avatars" });const router = express.Router();&nbsp;router.post("/", upload.single("avatar"), (req, res) =&gt; {&nbsp;&nbsp;if (!req.file) return res.status(400).json({ error: "No file uploaded" });&nbsp;&nbsp;res.json({ filename: req.file.filename, path: req.file.path });});&nbsp;module.exports = router;</pre>
-              <h4 class="wp-block-heading">Bug fixing</h4>
-              <p class="wp-block-paragraph">
-                AI triages code history and stacks found traces to suggest
-                efficient patches after identifying code inconsistency. And,
-                even more helpful, it rewrites tricky blocks if prompted, thus
-                replacing manual debugging.
-              </p>
-              <p class="wp-block-paragraph">Here is an example:</p>
-              <pre class="wp-block-preformatted">
-def ratio(a, b): return a / b</pre
-              >
-              <p class="wp-block-paragraph">
-                <em>Original snippet: unhandled ZeroDivisionError</em>
-              </p>
-              <pre class="wp-block-preformatted">
-def ratio(a, b): if b == 0:&nbsp;&nbsp;&nbsp;&nbsp; return float("inf")&nbsp;&nbsp; return a / b</pre
-              >
-              <p class="wp-block-paragraph"><em>AI suggestion</em></p>
-              <h4 class="wp-block-heading">
-                Progress tracking &amp; documentation
-              </h4>
-              <p class="wp-block-paragraph">
-                AI analyzes code structure and logs to generate up-to-date
-                references, embedded comments, and changelogs. No stale
-                Wikipedia pages, but clear, brief reports to keep the
-                stakeholders always informed without scheduling additional
-                meetings.
-              </p>
-              <p class="wp-block-paragraph">For example:</p>
-              <pre
-                class="wp-block-preformatted"
-              ><em># AI-generated CHANGELOG.md entry## [1.3.0] - 2025-07-22### Added</em>- `UserProfile` React component with image-upload support.- `/api/upload-avatar` Express route with multer.<em>### Fixed</em>- Infinite-loop bug in `printNumbers`.- Division-by-zero guard in `ratio()`.</pre>
               <h3 class="wp-block-heading">
                 <strong>The problem of AI-powered software development</strong>
               </h3>
-              <p class="wp-block-paragraph">
-                You would probably think that the code snippets written above
-                are checked and rock-solid, wouldn’t you? Well, surprise:
-                they’re straight from ChatGPT and dropped without validating.
-              </p>
               <blockquote
                 class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow"
               >
@@ -48689,57 +48752,7 @@ def ratio(a, b): if b == 0:&nbsp;&nbsp;&nbsp;&nbsp; return float("inf")&nbsp;&nb
                   >
                 </p>
               </blockquote>
-              <p class="wp-block-paragraph">
-                That’s why you will still need sharp engineers with real-world
-                domain know-how, no matter the innovations. Smart assistants can
-                crank out suggestions at speed, for sure, but only real
-                professionals can check and tweak the lines before deployment.
-              </p>
-              <p class="wp-block-paragraph">
-                Don’t hand off your ship’s navigation to autopilot. Hire a good
-                crew.
-              </p>
-              <section
-                class="ab_post-banner module lazy entered loaded"
-                style="
-                  background-image: url(&quot;https://www.abtosoftware.com/wp-content/uploads/2023/06/banner-11.png&quot;);
-                "
-                data-bg="https://www.abtosoftware.com/wp-content/uploads/2023/06/banner-11.png"
-                data-ll-status="loaded"
-              >
-                <div class="ab_post-banner__inner">
-                  <div class="ab_post-banner__head">
-                    <h5 class="ab_post-banner__title">
-                      AI agents to enjoy self-optimizing workflows
-                    </h5>
-                    <div class="ab_post-banner__subtitle">
-                      AI helpers that plan, make decisions, and evolve
-                    </div>
-                  </div>
-                  <div class="ab_post-banner__bottom">
-                    <a
-                      href="https://www.abtosoftware.com/services/ai-agent-development-services"
-                      class="ab_button ab_post-banner__button"
-                      style="1"
-                      target="_blank"
-                    >
-                      Learn more
-                    </a>
-                  </div>
-                </div>
-              </section>
-              <h2 class="wp-block-heading" id="heading2">
-                The benefits of AI-augmented software development
-              </h2>
-              <p class="wp-block-paragraph">
-                AI technology is here to stay.&nbsp;
-              </p>
-              <h3 class="wp-block-heading">Less effort, more outcome</h3>
-              <p class="wp-block-paragraph">
-                AI automates resource-intense processes, including prototyping,
-                <strong>to free up engineers to focus on priorities.</strong
-                >&nbsp;
-              </p>
+            
               <p class="wp-block-paragraph">
                 <a
                   href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/unleashing-developer-productivity-with-generative-ai"
@@ -48748,287 +48761,7 @@ def ratio(a, b): if b == 0:&nbsp;&nbsp;&nbsp;&nbsp; return float("inf")&nbsp;&nb
                   >As stated by McKinsey</a
                 >, AI produces <em>“tremendous productivity”</em>:
               </p>
-              <ul class="wp-block-list">
-                <li>
-                  The developers using assistants have a 25-30% better success
-                  rate in finishing complex tasks on time
-                </li>
-                <li>
-                  In one controlled test, the developers using copilots have
-                  finished an exercise 55% faster than others
-                </li>
-              </ul>
-              <h3 class="wp-block-heading">Code quality</h3>
-              <p class="wp-block-paragraph">
-                AI automates code review and analysis
-                <strong>to enforce best practices </strong>after identifying
-                overlooked inconsistencies. For example, DeepCode or SonarQube
-                leverage machine learning
-                <strong>to highlight any “smells” and antipatterns</strong>
-                before issues get deeper.
-              </p>
-              <p class="wp-block-paragraph">
-                One analysis even showed
-                <a
-                  href="https://www.numberanalytics.com/blog/5-key-stats-generative-ai-technology-software-solutions#:~:text=Perhaps%20most%20surprising%20is%20the,IBM%20Research%2C%202023"
-                  target="_blank"
-                  rel="noreferrer noopener nofollow"
-                  ><strong>41% fewer code issues</strong></a
-                ><strong> </strong>in projects that involved AI assistance
-                across workflows.
-              </p>
-              <h3 class="wp-block-heading">Business agility</h3>
-              <p class="wp-block-paragraph">
-                AI transforms software development
-                <strong>from design to release</strong>, including planning,
-                coding, testing, and support.
-              </p>
-              <p class="wp-block-paragraph">
-                <a
-                  href="https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/how-an-ai-enabled-software-product-development-life-cycle-will-fuel-innovation"
-                  target="_blank"
-                  rel="noreferrer noopener nofollow"
-                  >As stated by McKinsey</a
-                >:
-              </p>
-              <ul class="wp-block-list">
-                <li>
-                  The automation lets teams run more product iterations, which
-                  means quicker response to trends&nbsp;
-                </li>
-                <li>
-                  And, accordingly, that allows for better product-market fit
-                </li>
-              </ul>
-              <h3 class="wp-block-heading">More focus on creativity</h3>
-              <p class="wp-block-paragraph">
-                AI performs monotonous processes, so that software developers
-                can concentrate on strategic, complex tasks. Talking about
-                quality assurance, AI shifts the focus from doing tedious checks
-                to innovation.&nbsp;
-              </p>
-              <p class="wp-block-paragraph">
-                <a
-                  href="https://www.gartner.com/en/articles/ai-agents-transforming-software-engineering#:~:text=As%20AI%20agents%20continue%20to,on%20more%20creative%2C%20complex%20challenges"
-                  target="_blank"
-                  rel="noreferrer noopener nofollow"
-                  ><strong
-                    >AI removes friction points across lifecycles</strong
-                  ></a
-                ><strong>,</strong> which unlocks human creativity in resolving
-                non-trivial challenges rather than nitpicking syntax.
-              </p>
-              <section
-                class="ab_post-banner module lazy entered loaded"
-                style="
-                  background-image: url(&quot;https://www.abtosoftware.com/wp-content/uploads/2025/07/RPA-implementation-process-roadmap-blog-cover.png&quot;);
-                "
-                data-bg="https://www.abtosoftware.com/wp-content/uploads/2025/07/RPA-implementation-process-roadmap-blog-cover.png"
-                data-ll-status="loaded"
-              >
-                <div class="ab_post-banner__inner">
-                  <div class="ab_post-banner__head">
-                    <h5 class="ab_post-banner__title">
-                      Transform Care, Reduce Costs
-                    </h5>
-                    <div class="ab_post-banner__subtitle">
-                      Stop running expensive, outdated systems. Start
-                      implementing predictive and personalized care. Unlock
-                      better patient outcomes and massive operational
-                      savings-the twin goals of modern healthcare.
-                    </div>
-                  </div>
-                  <div class="ab_post-banner__bottom">
-                    <a
-                      href="https://www.abtosoftware.com/wp-content/uploads/2025/09/ai-agents-from-theory-to-implementation.pdf"
-                      class="ab_button ab_post-banner__button"
-                      style="1"
-                    >
-                      Read a guide!
-                    </a>
-                  </div>
-                </div>
-              </section>
-              <h2 class="wp-block-heading" id="heading3">
-                <strong
-                  >The challenges of AI-augmented software engineering</strong
-                >
-              </h2>
-              <p class="wp-block-paragraph">
-                AI promises to supercharge software development – but only
-                paired with strong guardrails and expertise.
-              </p>
-              <h3 class="wp-block-heading">Security &amp; privacy risks</h3>
-              <ul class="wp-block-list">
-                <li>
-                  Data leakage: the tools may expose sensitive information if
-                  fed proprietary source
-                </li>
-                <li>
-                  Unsafe suggestions: the tools may recommend weak encryption,
-                  old libraries, and other poor choices
-                </li>
-              </ul>
-              <p class="wp-block-paragraph">
-                What’s more, there’s another threat layer – attackers prompting
-                AI into generating malware.
-              </p>
-              <h3 class="wp-block-heading">
-                Overreliance &amp; unpredictable results
-              </h3>
-              <ul class="wp-block-list">
-                <li>
-                  Data inconsistencies: an algorithm might generate code
-                  snippets looking plausible but fail at runtime, which forces
-                  software developers to double-check every suggestion&nbsp;
-                </li>
-                <li>
-                  False confidence: the assistant might slip through mistakes
-                  when trusted too readily
-                </li>
-              </ul>
-              <p class="wp-block-paragraph">
-                One survey found that
-                <a
-                  href="https://www.devopsdigest.com/exploring-the-power-of-ai-in-software-development-part-4-challenges"
-                  target="_blank"
-                  rel="noreferrer noopener nofollow"
-                  >40% of AI-generated lines contain defects</a
-                >, which underscores the importance of testing.
-              </p>
-              <h3 class="wp-block-heading">Code explainability&nbsp;</h3>
-              <ul class="wp-block-list">
-                <li>
-                  Black-box models: the suggestions often come without
-                  reasoning, which might affect debugging
-                </li>
-                <li>
-                  Poor accountability: who’s responsible for poor design
-                  choices, human or human-trained machine?
-                </li>
-              </ul>
-              <h3 class="wp-block-heading">Integration complexity&nbsp;</h3>
-              <ul class="wp-block-list">
-                <li>
-                  Legacy applications: some tools are optimized for modern
-                  microservices architecture and struggle when interfering with
-                  old-school, monolith architecture, thus adding both time and
-                  cost
-                </li>
-                <li>
-                  Workflow disruption: new tools oftentimes require to rethink
-                  implemented pipelines and toolchains – some projects might
-                  stall when transitioning
-                </li>
-              </ul>
-              <h2 class="wp-block-heading" id="heading4">
-                The future of AI augmented development
-              </h2>
-              <p class="wp-block-paragraph">
-                AI augmented software engineering is moving from another
-                interesting experiment to mass audience practice. AI
-                augmentation isn’t just some trend – it’s the tectonic shift
-                that keeps everyone engaged.
-              </p>
-              <p class="wp-block-paragraph">
-                As to well-sourced references:&nbsp;
-              </p>
-              <ul class="wp-block-list">
-                <li>
-                  In 2023, fewer than 10% of enterprise engineers routinely
-                  utilized AI tools, but that was set to surpass
-                  <a
-                    href="https://www.gartner.com/en/newsroom/press-releases/2023-11-28-gartner-hype-cycle-shows-ai-practices-and-platform-engineering-will-reach-mainstream-adoption-in-software-engineering-in-two-to-five-years"
-                    target="_blank"
-                    rel="noreferrer noopener nofollow"
-                    >50% of software engineers by 2027</a
-                  >
-                </li>
-                <li>
-                  By 2028,
-                  <a
-                    href="https://www.gartner.com/en/newsroom/press-releases/2024-04-11-gartner-says-75-percent-of-enterprise-software-engineers-will-use-ai-code-assistants-by-2028"
-                    target="_blank"
-                    rel="noreferrer noopener nofollow"
-                    >75% of enterprise engineers</a
-                  >
-                  will use AI tools for assistance&nbsp;
-                </li>
-              </ul>
-              <p class="wp-block-paragraph">
-                In the near future, AI augmented software engineering will go
-                beyond simple code generation and suggestions. In the long run,
-                AI tools will become almost imperative to win the customer.
-              </p>
-              <p class="wp-block-paragraph">It is already showing:</p>
-              <ul class="wp-block-list">
-                <li>
-                  GitHub Copilot, Q Developer, and other major platforms are
-                  embedded into pipelines and environments, thus demonstrating
-                  vendor commitment to introducing AI-backed workflows
-                </li>
-                <li>
-                  From major DevOps platforms to simple low-code suites,
-                  AI-based features are the baseline expectation
-                </li>
-              </ul>
-              <h2 class="wp-block-heading" id="heading5">
-                Key tools for AI augmented development: quick overview
-              </h2>
-              <h3 class="wp-block-heading">
-                Conversational models: versatile helpers
-              </h3>
-              <p class="wp-block-paragraph">
-                The general-purpose, chat-based assistants can process natural
-                language, making them easy-to-navigate tools. Code generation,
-                request review and correction, basic testing, bug fixing, and
-                other mundane tasks – all done within seconds.
-              </p>
-              <p class="wp-block-paragraph">Popular services:</p>
-              <ul class="wp-block-list">
-                <li>ChatGPT</li>
-                <li>Gemini</li>
-              </ul>
-              <h3 class="wp-block-heading">Code generation</h3>
-              <p class="wp-block-paragraph">
-                These models embed directly into pipelines to scaffold simple
-                functions and classes, and even entire modules. They create
-                quick prototypes, thus simplifying resource-intensive tasks.
-              </p>
-              <p class="wp-block-paragraph">Popular services:</p>
-              <ul class="wp-block-list">
-                <li>GitHub Copilot</li>
-                <li>Q Developer</li>
-                <li>Tabnine</li>
-                <li>Qodo</li>
-              </ul>
-              <h3 class="wp-block-heading">Automated testing</h3>
-              <p class="wp-block-paragraph">
-                These platforms can create and execute test suites (unit,
-                integration, and others) with minimal human partake. They adapt
-                to changes and regressions, thereby reducing manual burden of
-                writing and updating.
-              </p>
-              <p class="wp-block-paragraph">Popular services:</p>
-              <ul class="wp-block-list">
-                <li>Testim</li>
-                <li>Mabl</li>
-                <li>Appvance</li>
-                <li>Functionize</li>
-              </ul>
-              <h3 class="wp-block-heading">Bug detection &amp; debugging</h3>
-              <p class="wp-block-paragraph">
-                These platforms can scan and analyze code snippets to show code
-                smells, logic errors, and other code issues. Some can even
-                propose and apply code fixes.
-              </p>
-              <p class="wp-block-paragraph">Popular services:</p>
-              <ul class="wp-block-list">
-                <li>DeepCode</li>
-                <li>SonarQube</li>
-                <li>GitHub Copilot</li>
-                <li>CodeRabbit AI</li>
-              </ul>
+             
               <figure class="wp-block-table">
                 <table class="has-fixed-layout">
                   <tbody>
@@ -49173,8 +48906,8 @@ def ratio(a, b): if b == 0:&nbsp;&nbsp;&nbsp;&nbsp; return float("inf")&nbsp;&nb
                   </div>
                 </div>
               </section>
-              <h2 class="wp-block-heading" id="heading6">How we can help</h2>
-                <h2 class="ab_post-faq__title mb-[24px]" id="heading7">FAQ</h2>
+              <h2 class="wp-block-heading" id="heading9">How we can help</h2>
+                <h2 class="ab_post-faq__title mb-[24px]" id="heading10">FAQ</h2>
                 <script type="application/ld+json">
                   {
                     "@context": "https://schema.org",

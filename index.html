@@ -48290,11 +48290,6 @@
                     >
                   </li>
                   <li class="post-navigation__item group">
-                    <span data-href="#heading5"
-                      >The Migration Roadmap</span
-                    >
-                  </li>
-                  <li class="post-navigation__item group">
                     <span data-href="#heading6"
                       >Strangler Fig Pattern</span
                     >
@@ -48707,7 +48702,7 @@ Once you've decided that system is worth touching, the next question is how much
 None of these is "correct", let`s take a look
               </p>
               
-              <h4 class="wp-block-heading">Rehost</h4>
+              <h3 class="wp-block-heading">Rehost</h3>
 
 <p class="wp-block-paragraph">
 Rehost means moving the app without touching it. Same code - just a different place to run. A VM becomes a container, on-prem becomes cloud, an aging server becomes a newer one. 
@@ -48732,14 +48727,164 @@ You need breathing room to plan a proper migration without doing it under pressu
 
 
 <p class="wp-block-paragraph">
-But. You're still on .NET Framework. Still on C# 7.3. Still frozen out of everything modern .NET offers. Rehosting buys time — it doesn't spend it on anything. If the plan stops here, you haven't solved the problem, you've just changed its address.
+But. You're still on .NET Framework. Still on C# 7.3. Still frozen out of everything modern .NET offers. Rehosting buys time - it doesn't spend it on anything. If the plan stops here, you haven't solved the problem, you've just changed its address.
               </p>
-              <h4 class="wp-block-heading">Migrate</h4>
-              <h4 class="wp-block-heading">Re-architect</h4>
+              <h3 class="wp-block-heading">Migrate</h3>
+
+
+              <p class="wp-block-paragraph">
+        Why to migrate:</p>
+<p class="wp-block-paragraph">
+    <strong>Technical debt </strong> - compounds the longer a system stays on .NET Framework; compatibility patches cost more over time than a planned migration.
+              </p>
+<p class="wp-block-paragraph">
+    <strong>Security</strong> - Framework doesn't receive the runtime-level security improvements modern .NET gets (crypto, identity, HTTPS stack); it only gets OS-level patches.
+              </p>
+<p class="wp-block-paragraph">
+    <strong>Talent</strong> - Framework-only experience is a shrinking hiring pool; most engineers now default to .NET Core/.NET, Docker, Kubernetes, Azure.
+              </p>
+<p class="wp-block-paragraph">
+    <strong>Cloud/containers</strong> - Framework apps can't run natively on Linux containers, which limits hosting choice and raises cost. .NET 10 runs cross-platform and is built for container/cloud-native deployment.
+              </p>
+<p class="wp-block-paragraph">
+    <strong>Performance</strong> - newer runtimes bring faster startup, better GC, and higher throughput; real projects report large (~50–60%+) API response-time gains after migrating off Framework, with lower infrastructure spend.
+              </p>
+
+<h4 class="wp-block-heading"> Key Risks to Plan For:</h4>
+<figure class="wp-block-table">
+  <table class="has-fixed-layout">
+    <tbody>
+      <tr>
+        <td class="has-text-align-left" data-align="left"><strong>Hidden dependencies</strong> (old DLLs, COM components, undocumented API calls)</td>
+        <td class="has-text-align-left" data-align="left">Surface late, cause unplanned rework - needs automated dependency discovery up front.</td>
+      </tr>
+      <tr>
+        <td class="has-text-align-left" data-align="left"><strong>Library/driver gaps</strong></td>
+        <td class="has-text-align-left" data-align="left">Some NuGet packages or EF6-specific features have no direct .NET 10 equivalent.</td>
+      </tr>
+      <tr>
+        <td class="has-text-align-left" data-align="left"><strong>UI parity</strong></td>
+        <td class="has-text-align-left" data-align="left">Web Forms → modern UI can subtly change layout/workflow; needs early validation with real users.</td>
+      </tr>
+      <tr>
+        <td class="has-text-align-left" data-align="left"><strong>Compliance</strong></td>
+        <td class="has-text-align-left" data-align="left">Losing audit trails/logs mid-migration can trigger re-certification in regulated environments.</td>
+      </tr>
+      <tr>
+        <td class="has-text-align-left" data-align="left"><strong>Test coverage gaps</strong></td>
+        <td class="has-text-align-left" data-align="left">Weak automated testing lets defects reach production, extending stabilization.</td>
+      </tr>
+      <tr>
+        <td class="has-text-align-left" data-align="left"><strong>DevOps/CI-CD cutover</strong></td>
+        <td class="has-text-align-left" data-align="left">Old and new pipelines running in parallel need careful sequencing to avoid release disruption.</td>
+      </tr>
+      <tr>
+        <td class="has-text-align-left" data-align="left"><strong>Timeline optimism</strong></td>
+        <td class="has-text-align-left" data-align="left">Underestimating interdependencies leads to budget overrun and rushed, debt-creating shortcuts.</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+
+<h4 class="wp-block-heading">Step-by-Step Approach</h4>
+
+<h5 class="wp-block-heading">Audit the application portfolio</h5>
+<p class="wp-block-paragraph">
+  For each app: framework version, project count/size, external services, scheduled/background jobs, reporting components, third-party SDKs. This sizes the migration and surfaces blockers early.
+</p>
+
+<h5 class="wp-block-heading">Check .NET 10 compatibility</h5>
+<p class="wp-block-paragraph">
+  For every dependency, ask: is there a .NET 10-compatible version? Is it actively maintained? Any breaking changes? Does it need replacing? Automated tooling helps but manual review is still required.
+</p>
+
+<h5 class="wp-block-heading">Flag Windows-specific dependencies</h5>
+<figure class="wp-block-table">
+  <table class="has-fixed-layout">
+    <tbody>
+      <tr>
+        <td class="has-text-align-left" data-align="left">Windows Registry config</td>
+        <td class="has-text-align-left" data-align="left"><code>appsettings.json</code>, Azure App Configuration, env vars, Key Vault</td>
+      </tr>
+      <tr>
+        <td class="has-text-align-left" data-align="left">COM Interop (Office, ERP, drivers)</td>
+        <td class="has-text-align-left" data-align="left">Needs case-by-case review - not supported cross-platform</td>
+      </tr>
+      <tr>
+        <td class="has-text-align-left" data-align="left">Windows Services</td>
+        <td class="has-text-align-left" data-align="left">Worker Services, Background Services, Azure Functions, K8s Jobs</td>
+      </tr>
+      <tr>
+        <td class="has-text-align-left" data-align="left">Local file system (<code>C:\...</code>)</td>
+        <td class="has-text-align-left" data-align="left">Blob Storage, S3, Azure Files, shared volumes</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+<h5 class="wp-block-heading">Handle known breaking changes</h5>
+<figure class="wp-block-table">
+  <table class="has-fixed-layout">
+    <tbody>
+      <tr>
+        <td class="has-text-align-left" data-align="left">WCF server hosting</td>
+        <td class="has-text-align-left" data-align="left">Minimal APIs / ASP.NET Core Web API / gRPC (WCF client support still works)</td>
+      </tr>
+      <tr>
+        <td class="has-text-align-left" data-align="left"><code>Global.asax</code></td>
+        <td class="has-text-align-left" data-align="left"><code>Program.cs</code> + middleware + DI</td>
+      </tr>
+      <tr>
+        <td class="has-text-align-left" data-align="left"><code>AppDomain</code></td>
+        <td class="has-text-align-left" data-align="left"><code>AssemblyLoadContext</code>, separate worker processes, containers</td>
+      </tr>
+      <tr>
+        <td class="has-text-align-left" data-align="left"><code>System.Drawing</code></td>
+        <td class="has-text-align-left" data-align="left">SkiaSharp or ImageSharp (cross-platform)</td>
+      </tr>
+      <tr>
+        <td class="has-text-align-left" data-align="left"><code>web.config</code> / <code>app.config</code></td>
+        <td class="has-text-align-left" data-align="left"><code>appsettings.json</code> + environment configs + secrets manager</td>
+      </tr>
+      <tr>
+        <td class="has-text-align-left" data-align="left">Forms/Windows Authentication, Membership Providers</td>
+        <td class="has-text-align-left" data-align="left">ASP.NET Core Identity, Microsoft Entra ID, OpenID Connect, OAuth2, JWT</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+<h5 class="wp-block-heading">Migrate the data layer (EF6 → EF Core)</h5>
+<p class="wp-block-paragraph">
+  Not a version bump - a different architecture. Plan separately for:
+</p>
+<ul class="wp-block-list">
+  <li>Database-first/EDMX → Code First conventions</li>
+  <li>Query behavior differences (some LINQ patterns evaluate differently)</li>
+  <li>Performance re-validation, since EF Core's execution model differs from EF6</li>
+</ul>
+
+<h4 class="wp-block-heading">Execution Best Practices</h4>
+<ul class="wp-block-list">
+  <li><strong>Verified baseline first</strong> - automate dependency/API discovery rather than trusting old docs.</li>
+  <li><strong>Prioritize by business impact, not code volume</strong> - migrate high-value, low-dependency modules first for early wins and tool validation.</li>
+  <li><strong>Parity checkpoints</strong> - automated regression + service stubs after each iteration to catch regressions immediately.</li>
+  <li><strong>Strangler pattern</strong> - replace modules incrementally while the rest of the system stays live; critical for high-availability systems.</li>
+  <li><strong>CI/CD in parallel early</strong> - don't wait until cutover to modernize the pipeline.</li>
+  <li><strong>Security/compliance as part of migration, not after</strong> - audit third-party libraries and auth flows; use the migration as the point to adopt zero-trust principles and better observability.</li>
+  <li><strong>Automation + human review</strong> - use AI-assisted tooling for code mapping/transformation, but keep engineers reviewing domain logic and performance-critical paths.</li>
+</ul>
+
+
+
+
+
+              <h3 class="wp-block-heading">Re-architect</h3>
 
 
 <p class="wp-block-paragraph">
-Re-architect goes further than any of the other options — it doesn't just move you to modern .NET, it questions the shape of the system itself. You get the new platform either way, same as with migrate. Break up the monolith, move to microservices, redesign for cloud-native instead of fitting cloud onto something that was never built for it.
+Re-architect goes further than any of the other options - it doesn't just move you to modern .NET, it questions the shape of the system itself. You get the new platform either way, same as with migrate. Break up the monolith, move to microservices, redesign for cloud-native instead of fitting cloud onto something that was never built for it.
               </p>
 
 <p class="wp-block-paragraph">
@@ -48762,37 +48907,201 @@ High cost of the old architecture now - every feature takes longer than it shoul
                 </ul>
 
 <p class="wp-block-paragraph">
-If the platform is the only thing holding you back — old runtime, frozen language, missing libraries - you don't need redesign. Migrate gets you modern .NET without added risk of rebuilding the system's architecture at the same time. Re-architecting a system that just needed a platform update is very expensive mistake.
+If the platform is the only thing holding you back - old runtime, frozen language, missing libraries - you don't need redesign. Migrate gets you modern .NET without added risk of rebuilding the system's architecture at the same time. Re-architecting a system that just needed a platform update is very expensive mistake.
               </p>
 
               <h2 class="wp-block-heading" id="heading4">The Cost of Standing Still
               </h2>
-              <h2 class="wp-block-heading" id="heading5">The Migration Roadmap
-              </h2>
+
+<p class="wp-block-paragraph">
+              For engineering teams, staying on .NET Framework 4.8 feels like a neutral choice. For budget holders, it shows up on the balance sheet in ways that are easy to underestimate because they're diffuse. And it is not only about money. The cost of inaction is hidden in other line items
+              </p>
+
+ <ul class="wp-block-list">
+                <li>
+Hiring. .NET Framework talent is shrinking. Every year more engineers who know 4.8 well move to .NET (Core), leave the ecosystem, or retire. That gap shows up as higher recruiting costs, longer time-to-hire, and inflated contractor rates for a skill set nobody wants to specialize in anymore.
+                </li>
+
+                <li>
+Security. Framework 4.8 is the last version in the line — it receives fixes only as part of Windows servicing, with no new features and a shrinking pool of security researchers actively probing it (which cuts both ways: less scrutiny, but also less community defense when something is found).
+                </li>
+
+                <li>
+Cloud readiness. Framework 4.8 runs on Windows only. That locks you into Windows-based compute (typically pricier per-core than Linux), blocks containerization strategies that assume cross-platform .NET, and rules out serverless and edge deployment patterns your competitors are already using to cut infrastructure spend. Every cloud cost optimization initiative eventually hits this wall.
+                </li>
+
+                <li>
+Velocity. This is the one budget holders feel first without naming it. Every sprint spent working around Framework limitations — missing language features, no native dependency injection, clunky async patterns, incompatible modern packages — is a sprint not spent on product. Things take longer than they should.
+                </li>
+                </ul>
+
+<p class="wp-block-paragraph">
+These costs never appear together on one invoice. They're scattered across recruiting, security, and cloud budgets — which is exactly why standing still feels free when it isn't.
+              </p>
+
+
               <h2 class="wp-block-heading" id="heading6"> Strangler Fig Pattern
               </h2>
-              <h2 class="wp-block-heading" id="heading7">Post-Migration Review
+
+<p class="wp-block-paragraph">
+              If you decide to migrate, full rewrite isn't a realistic option - the application is too large, too business-critical, or too poorly documented to replace in one pass. The Strangler Fig pattern solves this by routing traffic through a facade that incrementally redirects functionality from the old system to the new one, module by module, until the legacy application can be retired entirely.
+              </p>
+
+              <h3 class="wp-block-heading" id="heading6"> 
+Module-by-Module Migration vs. Big-Bang Rewrite
+              </h3>
+
+<p class="wp-block-paragraph">
+Big-bang rewrite means freezing the legacy codebase, building the replacement in parallel, and cutting over all at once. It's rarely the right call because:
+              </p>
+
+<ul class="wp-block-list">
+                <li>
+
+Feature freezes on the legacy system for the duration of the rewrite are often unacceptable to the business.
+    </li>
+                <li>
+
+Risk is concentrated into a single cutover event — if something's wrong, everything is wrong at once.
+    </li>
+
+                <li>
+Scope creep during a long rewrite tends to make the "new" system a moving target that never quite ships.
+    </li>
+                </ul>
+<p class="wp-block-paragraph">
+Module-by-module migration (the strangler approach) instead peels off one capability at a time — say, the reporting module, then the billing module, then the admin console — and reimplements each on modern .NET, while the rest of the application keeps running unchanged. Each module is:
+              </p>
+
+
+
+
+<ul class="wp-block-list">
+                <li>
+
+Small enough to validate independently.
+  </li>
+                <li>
+Shippable on its own timeline, so business value lands incrementally rather than at the end.
+  </li>
+                <li>
+Reversible — if a module migration goes badly, traffic can be routed back to the legacy version without touching anything else.
+  </li>
+                </ul>
+<p class="wp-block-paragraph">
+A practical way to sequence modules is by the dependency inventory from Phase 1: start with components that have the fewest System.Web/WCF/Remoting/EF6 entanglements, since they migrate cleanly and prove out the routing infrastructure before you tackle the harder pieces.
+              </p>
+
+              <h3 class="wp-block-heading" id="heading6"> 
+Coexistence of Framework and Modern .NET During Transition
+              </h3>
+
+<p class="wp-block-paragraph">
+The defining engineering challenge of the strangler approach is that .NET Framework 4.8 and modern .NET (10) must run side by side — often for months or years — and interoperate cleanly. A few patterns make that coexistence workable:
+              </p>
+<ul class="wp-block-list">
+                <li>
+Routing facade. A reverse proxy (YARP, IIS URL Rewrite, or an API gateway) routes requests by path, header, or feature flag — migrated functionality to the new .NET service, everything else to the legacy app — making the migration invisible to end users.
+</li>
+                <li>
+Shared session and identity. Externalize session storage (e.g., Redis) and issue tokens both runtimes can validate, rather than relying on ASP.NET Framework's in-process session.
+</li>
+                <li>
+Data layer coexistence. When EF6 and EF Core read from the same database, schema changes must stay backward-compatible in both directions — the trickiest constraint, since the two frameworks diverge on migrations history and concurrency tokens.
+</li>
+                <li>
+Cross-runtime communication. Since Framework and modern .NET can't share an AppDomain, in-process calls between legacy and migrated modules get replaced with WCF/CoreWCF or a lightweight REST/gRPC contract.
+</li>
+                <li>
+Side-car processes. Third-party libraries with no modern build (COM interop, legacy SDKs) can keep running in a small .NET Framework side-car the modern app calls over a local API — so migration doesn't stall waiting on a vendor.
+</li>
+                </ul>
+
+<h2 class="wp-block-heading" id="heading7">Post-Migration Review
               </h2>
+
+<p class="wp-block-paragraph">
+Once a module (or the whole application) has cut over to modern .NET, the work isn't done — it shifts from building to confirming the migration actually holds up under real conditions.
+</p>
+
+
+<h4 class="wp-block-heading" id="heading7">
+Post-Migration Validation
+</h4>
+
+
+
+<ul class="wp-block-list">
+                <li>
+Functional parity checks. Re-run the critical business workflows identified back in Phase 1's risk classification and confirm outputs match the legacy system exactly — especially anything touching EF Core query results, WCF/gRPC contract responses, or session-dependent behavior.
+</li>
+                <li>
+Data integrity audit. Spot-check records written by the new system against what the legacy system would have produced, particularly around anything migrated off EF6 (concurrency tokens, computed columns, lazy-loaded relationships are the usual culprits for silent mismatches).
+</li>
+                <li>
+Performance comparison against baseline. Compare response times, throughput, and resource usage to the pre-migration numbers captured during Phase 3. A technically "successful" migration that's slower in production is still a problem worth fixing before calling it done.
+</li>
+                </ul>
+
+<h4 class="wp-block-heading" id="heading7">
+Monitoring & Decommissioning
+</h4>
+
+<ul class="wp-block-list">
+                <li>
+Targeted alerting on known risk areas. Set alerts specifically for the failure modes the migration was most likely to introduce — session loss after moving off in-process ASP.NET session state, latency spikes from EF Core query translation differences, or timeouts on new cross-runtime (WCF/REST) calls that used to be in-process.
+</li>
+                <li>
+Confirm zero traffic to legacy. Verify through the routing facade's logs that nothing is still being routed to the old .NET Framework 4.8 application before touching it.
+</li>
+                <li>
+Archive, don't delete, first. Take a final backup of the legacy codebase, database, and configuration, and retain it for a defined compliance/audit period — regulated industries especially may require this. And Decommission in stages. 
+</li>
+                </ul>
+
+<h4 class="wp-block-heading" id="heading7">
+Team Retraining
+</h4>
+<ul class="wp-block-list">
+                <li>
+Modern .NET fundamentals. Cover the practical differences developers will hit daily: dependency injection patterns, minimal APIs vs. WCF, EF Core migrations and query behavior, and the loss of things like HttpContext.Current-style ambient state.
+</li>
+                <li>
+Operational runbook updates. Retrain the ops/support team on the new deployment model (containers/Kubernetes/App Service vs. IIS), new logging and monitoring tooling, and updated incident response steps for the modern stack.
+</li>
+                <li>
+Institutional knowledge capture. Document the resolution for every blocker encountered (System.Web replacement, WCF/CoreWCF decisions, EF6→EF Core mapping choices) — this is what prevents the next team from re-litigating decisions already made, or worse, not knowing why something was built the way it was.
+</li>
+                </ul>
+
+
+
+
               <h2 class="wp-block-heading" id="heading8">Conclusion
               </h2>
+<p class="wp-block-paragraph">
+.NET Framework 4.8 isn't going to fail overnight — that's exactly what makes it dangerous.
+</p>
 
+<p class="wp-block-paragraph">
+There's no single right answer across an entire portfolio on whether to move at all. Personally, I'd rely on common sense here. In most cases, migration is the right call. But it's not a "must." A few of us have seen WinForms projects running fine for 20 years with barely any changes — does that system actually need to migrate? Or is the smarter move to extract the core logic into something like an internal API, and let the old WinForms app and some shiny new web app both sit on top of it? That's a real question, not a rhetorical one, and the answer depends on the system, not a general rule.
+</p>
 
-              <h4 class="wp-block-heading">Code analysis</h4>
-              <p class="wp-block-paragraph">
-                AI parses the codebase to highlight security gaps, deceptive
-                elements, and potential performance bottlenecks. The insights
-                help teams to identify serious issues before escalation.
-              </p>
-            
+<p class="wp-block-paragraph">
+But if you do decide to migrate, I'm fully convinced the strangler fig pattern is the way to do it. Moving everything at once is not the way to act.
+</p>
+<p class="wp-block-paragraph">
+2026 is a reasonable year to start this — if there's a point to it, and mostly there is — not because of a hard deadline, but because every year of waiting means fewer people left who understand why the old system works the way it does. The teams that treat this as a managed, incremental transition — rather than a crisis project — are the ones who come out the other side with a system that's actually easier to run, not just a newer version of the same complexity.
+</p>
+
+             
               <pre class="wp-block-preformatted">
-import osdef connect_to_db(): user = os.getenv("DB_USER") password = os.getenv("DB_PASS") if not user or not password:&nbsp;&nbsp;&nbsp;&nbsp; raise RuntimeError("Database credentials not set") return db.connect(user=user, password=password)</pre
+import osdef connect_to_db()</pre
               >
               <p class="wp-block-paragraph">
                 <em>AI suggestion: environment variables</em>
               </p>
-              <h3 class="wp-block-heading">
-                <strong>The problem of AI-powered software development</strong>
-              </h3>
+             
               <blockquote
                 class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow"
               >
@@ -48813,54 +49122,7 @@ import osdef connect_to_db(): user = os.getenv("DB_USER") password = os.getenv("
                 >, AI produces <em>“tremendous productivity”</em>:
               </p>
              
-              <figure class="wp-block-table">
-                <table class="has-fixed-layout">
-                  <tbody>
-                    <tr>
-                      <td class="has-text-align-left" data-align="left">
-                        <strong>Orchestration over monolith</strong>
-                      </td>
-                      <td class="has-text-align-left" data-align="left">
-                        The framework should use an orchestrator that
-                        coordinates specialized agents, each focusing on
-                        individual, smaller tasks, thus enabling the system to
-                        handle multi-step challenges with efficiency.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="has-text-align-left" data-align="left">
-                        <strong>Human-in-the-loop (HITL) governance</strong>
-                      </td>
-                      <td class="has-text-align-left" data-align="left">
-                        The framework must include human checkpoints – while
-                        agents can complete full tasks, key actions (merging,
-                        deployment) must require human approval for control and
-                        accountability.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="has-text-align-left" data-align="left">
-                        <strong>Context is king</strong>
-                      </td>
-                      <td class="has-text-align-left" data-align="left">
-                        The framework should invest in context, including
-                        metadata, infrastructure graphs, and data on
-                        observability.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="has-text-align-left" data-align="left">
-                        <strong>Security by design</strong>
-                      </td>
-                      <td class="has-text-align-left" data-align="left">
-                        The framework should integrate necessary guardrails,
-                        policy enforcement, and continuous security scanning to
-                        ensure that protection is part of every single process.
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </figure>
+             
               <figure class="wp-block-image size-large">
                 <img
                   fetchpriority="high"

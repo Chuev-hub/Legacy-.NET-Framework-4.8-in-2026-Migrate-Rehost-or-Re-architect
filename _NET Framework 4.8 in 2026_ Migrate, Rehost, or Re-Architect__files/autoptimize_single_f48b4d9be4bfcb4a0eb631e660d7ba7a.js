@@ -1,2 +1,2 @@
-jQuery(document).ready(function($){if(jQuery('#landing-blob').length){setTimeout(function(){render_live_blob('#landing-blob',16,0.65,1,0.000012,true);},2500);}
+jQuery(document).ready(function($){if(jQuery('#landing-blob').length){setTimeout(function(){renderLiveBlob('#landing-blob',16,0.65,1,0.000012,true);},2500);}
 if(jQuery('.block-tools-tech').length){jQuery(document).on('click','.block-tools-tech__item-head',function(e){if(jQuery(window).width()>768)return;e.preventDefault();jQuery(this).toggleClass('block-tools-tech--open');jQuery(this).find('.block-tools-tech__accordion-btn').toggleClass('rotate-180');jQuery(this).next().slideToggle();})}});

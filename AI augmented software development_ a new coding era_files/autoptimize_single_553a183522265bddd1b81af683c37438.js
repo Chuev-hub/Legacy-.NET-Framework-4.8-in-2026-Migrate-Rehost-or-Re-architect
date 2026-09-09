@@ -1,4 +1,0 @@
-jQuery(document).ready(function($){if(jQuery(window).width()<768){setTimeout(function(){jQuery('body,html').animate({scrollTop:0},250);},500)}
-if(jQuery('.category-menu__slider').length){jQuery('.category-menu__slider').slick({dots:false,infinite:false,speed:300,centered:true,slidesToScroll:3,variableWidth:true,});}
-if(jQuery('#blob1').length){setTimeout(function(){render_live_blob('#blob1');render_live_blob('#blob2',16,0.65,1,0.000012);},2500);jQuery(window).on('resize',function(){render_live_blob('#blob1');render_live_blob('#blob2',16,0.65,1,0.000012);});}
-get_posts_by_cat_id(jQuery('.blog-articles:not(.author-articles)'));remove_articles_items_wrapper();jQuery(window).resize(function(){remove_articles_items_wrapper();});});
